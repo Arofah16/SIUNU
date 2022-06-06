@@ -28,9 +28,10 @@ class M_Inventaris extends CI_Model
       $this->db->delete($table);
   }
 
-  public function Edit_data($where,$table)
+  public function get_id($id)
   {
-    return $this->db->get_where($where, $table);
+    return $this->db->get_where('tbl_barang_inventaris', ['id_inventaris'=> $id])
+    ->row_array();
   }
   }  
 ?>

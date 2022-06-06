@@ -19,6 +19,7 @@ class Golongan extends CI_Controller {
     {	
         $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->data['golongan_barang'] = $this->db->query("SELECT * FROM tbl_golongan ORDER BY kode_golongan ASC");
+        
         $this->data['title_web'] = 'Data Golongan Barang ';
         $this->load->view('header_view',$this->data);
         $this->load->view('sidebar_view',$this->data);

@@ -50,7 +50,7 @@
                                             <?php }?>>
 
                                             <?php if($this->session->userdata('level') == 'Petugas'){?>
-                                            <a href="<?= base_url('inventaris/edit/'.$isi['id_inventaris']);?>"><button
+                                            <a href="<?= base_url('inventaris/edit_data/'.$isi['id_inventaris']);?>"><button
                                                     class="btn btn-success"><i class="fa fa-edit"></i></button></a>
                                             <a href="<?= base_url('inventaris/detail'.$isi['id_inventaris']);?>">
                                                 <button class="btn btn-primary"><i class="fa fa-sign-in"></i>

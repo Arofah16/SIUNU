@@ -37,6 +37,7 @@ class Dashboard extends CI_Controller {
 		$this->data['count_barang']=$this->db->query("SELECT * FROM tbl_barang")->num_rows();
 		$this->data['count_golongan']= $this->db->query("SELECT * FROM tbl_golongan")->num_rows();
 		$this->data['count_bidang']= $this->db->query("SELECT * FROM tbl_bidang_barang")->num_rows();
+		$this->data['count_inventaris'] = $this->db->query("SELECT * FROM tbl_barang_inventaris")->num_rows();
 		$this->load->view('header_view',$this->data);
 		$this->load->view('sidebar_view',$this->data);
 		$this->load->view('dashboard_view',$this->data);

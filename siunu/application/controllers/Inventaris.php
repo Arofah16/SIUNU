@@ -81,17 +81,20 @@ class Inventaris extends CI_Controller {
         redirect('inventaris/index');
     }
 
-    public function edit($id)
+    public function edit_data($id)
     {
-        $where = array ('id_inventaris', $id);
-        $data['inventaris'] = $this->M_Inventaris->edit_data($where, 'tbl_barang_inventaris')->result();
+        $data['inventaris'] = $this->M_Inventaris->get_id($id);
+        $this->data['barang'] = $this->M_Barang->get_table();
 
         $this->data['title_web'] = 'Edit Barang Inventaris ';
         $this->load->view('header_view',$this->data);
         $this->load->view('sidebar_view',$this->data);
         $this->load->view('Inventaris/edit_inventaris',$this->data); 
-        $this->load->view('footer_view',$this->data);
+        $this->load->view('footer_view',$this->data); 
+    }
 
-
+    public function edit_procces($id)
+    {
+        
     }
 }

@@ -21,8 +21,8 @@ class Bidang extends CI_Controller {
     {	
         $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->data['user'] = $this->M_Bidang->get_bidang_by_kode_golongan('tbl_login');
-
         $this->data['bidang_barang'] = $this->db->query("SELECT * FROM tbl_bidang_barang ORDER BY kode_bidang ASC");
+        
         $this->data['title_web'] = 'Data Bidang Barang ';
         $this->load->view('header_view',$this->data);
         $this->load->view('sidebar_view',$this->data);
