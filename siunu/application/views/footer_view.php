@@ -88,21 +88,27 @@ $(function() {
 </script>
 <script>
 $(document).ready(function() {
+    //kampus
     $('#kampus').change(function() {
         var id_kampus = $('#kampus').val();
+        console.log(id_kampus);
+
         if (id_kampus != '') {
             $.ajax({
                 url: "<?php echo base_url(); ?>Lokasi/fetch_gedung",
                 method: "POST",
                 data: {
-                    id: id_kampus
+                    id_kampus: id_kampus
                 },
-                success: function(data) {
+                success: function(data)
+
+                {
                     $('#gedung').html(data);
                     $('#lantai').html('<option value="">Select Lantai</option>');
                     $('#ruang').html('<option value="">Select Ruang</option>');
                     $('#sub_ruang').html('<option value="">Select Sub Ruang</option>');
-                }
+                },
+
             });
         } else {
             $('#gedung').html('<option value="">Select Gedung</option>');
@@ -112,14 +118,18 @@ $(document).ready(function() {
         }
     });
 
+    //gedung
     $('#gedung').change(function() {
         var id_gedung = $('#gedung').val();
+
+        console.log(id_gedung);
+
         if (id_gedung != '') {
             $.ajax({
                 url: "<?php echo base_url(); ?>Lokasi/fetch_lantai",
                 method: "POST",
                 data: {
-                    id: id_gedung
+                    id_gedung: id_gedung
                 },
                 success: function(data) {
                     $('#lantai').html(data);
@@ -134,18 +144,23 @@ $(document).ready(function() {
         }
     });
 
+    //lantai
     $('#lantai').change(function() {
         var id_lantai = $('#lantai').val();
+
+        console.log(id_lantai);
+
         if (id_lantai != '') {
             $.ajax({
                 url: "<?php echo base_url(); ?>Lokasi/fetch_ruang",
                 method: "POST",
                 data: {
-                    id: id_lantai
+                    id_lantai: id_lantai
                 },
                 success: function(data) {
                     $('#ruang').html(data);
-                    $('#sub_ruang').html('<option value="">Select Sub Ruang</option>');
+                    $('#sub_ruang').html(
+                        '<option value="">Select Sub Ruang</option>');
                 }
             });
         } else {
@@ -153,15 +168,16 @@ $(document).ready(function() {
             $('#sub_ruang').html('<option value="">Select Sub Ruang</option>');
         }
     });
-
+    //ruang
     $('#ruang').change(function() {
         var id_ruang = $('#ruang').val();
+        console.log(id_ruang);
         if (id_ruang != '') {
             $.ajax({
                 url: "<?php echo base_url(); ?>Lokasi/fetch_sub_ruang",
                 method: "POST",
                 data: {
-                    id: id_ruang
+                    id_ruang: id_ruang
                 },
                 success: function(data) {
                     $('#sub_ruang').html(data);
@@ -176,6 +192,7 @@ $(document).ready(function() {
 
 });
 </script>
+
 
 <!-- custom jQuery -->
 <script src="<?php echo base_url();?>assets_style/assets/dist/js/custom.js"></script>

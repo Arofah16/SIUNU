@@ -18,7 +18,6 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <?php echo form_open_multipart('inventaris/tambah_aksi');?>
-                        <!-- <form action="<?php echo base_url('barang/add');?>" method="POST" enctype="multipart/form-data"> -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -35,7 +34,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Lokasi Barang</label>
-                                    <select name="id_kampus" id="kampus" class="form-control">
+                                    <select name="kampus" id="kampus" class="form-control">
                                         <option value="">Pilih Kampus</option>
                                         <?php
                                             foreach($kampus as $row)
@@ -86,11 +85,15 @@
                                         <option value="perbaikan">Sedang Diperbaiki</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Gambar </label>
+                                    <input type="file" name="gambar_inventaris" class="form-control">
+                                </div>
                             </div>
                         </div>
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-primary btn-mr-6">Submit</button>
-                            </form>
+                            <button type="submit" class="btn btn-primary btn-mr-6">Simpan</button>
+                            <!-- </form> -->
                             <!-- <a href="<?= base_url('barang');?>" class="btn btn-danger btn-md">Kembali</a> -->
                             <!-- <?php echo form_close('inventaris');?> -->
                         </div>

@@ -1,29 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Barang extends CI_Controller {
+class Barang extends CI_Controller
+{
 	function __construct(){
 	    parent::__construct();
 	 	//validasi jika user belum login
         $this->data['CI'] =& get_instance();
         $this->load->helper(array('form', 'url'));
         $this->load->model('M_Barang');
-        // $this->load->model('M_Merk');
         $this->load->model('M_Golongan');
         $this->load->model('M_Bidang');
 
-
-     	
-        // if($this->session->userdata('masuk_perpus') != TRUE){
-		// 	$url=base_url('login');
-		// 	redirect($url);
-		// }
     }  
 
     public function index()
     {	
+       
         $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->data['barang'] = $this->M_Barang->get_table('tbl_barang');
+        $this->data['golbar'] = $this->M_Golongan->get_golongan();
+        $this->data['bidang'] = $this->M_Bidang->get_bidang();
+
         
         $this->data['title_web'] = 'Data Barang ';
         $this->load->view('header_view',$this->data);
@@ -31,6 +29,7 @@ class Barang extends CI_Controller {
         $this->load->view('Barang/barang_view',$this->data); 
         $this->load->view('footer_view',$this->data); 
     }
+
 
     public function tambah()
     {	
@@ -54,32 +53,23 @@ class Barang extends CI_Controller {
         }
     }
 
-    public function delete()
+    public function delete($id)
     {
-        $this->data['idbo'] = $this->session->userdata('ses_id');
-        $this->data['barang'] = $this->M_Barang->delete_table('tbl_barang');
-        $this->data['golbar'] = $this->M_Golongan->get_golongan();
-        // $this->data['merk'] = $this->M_Merk->get_merk();
-        $this->data['golbar'] = $this->M_Golongan->get_golongan();
-
-        
-        $this->data['title_web'] = 'Hapus Barang ';
-        $this->load->view('header_view',$this->data);
-        $this->load->view('sidebar_view',$this->data);
-        $this->load->view('Barang/tambah_barang_view',$this->data);
-        $this->load->view('footer_view',$this->data);
+        $where = array('id_barang'=>$id);
+        $data = $this->M_Barang->hapus_barang($where, 'tbl_barang');
+        redirect('Barang/index');
 
     }
 
     public function add()
-    {
-		// format tabel / kode baru 3 huru p / id tabel / order by limit ngambil data terakhir
-        
-        $nama_barang = htmlentities($this->input->post('nama_barang',TRUE));
-        // $merk_barang = htmlentities($this->input->post('merk_barang',TRUE));
-        $jumlah_barang = htmlentities($this->input->post('jumlah_barang',TRUE));
+    {     
+        $this->data['idbo'] = $this->session->userdata('ses_id');
+        $this->data['golbar'] = $this->M_Golongan->fetch_Golongan();
+
         $golongan = htmlentities($this->input->post('golongan', TRUE));
         $bidang = htmlentities($this->input->post('bidang', TRUE));
+        $nama_barang = htmlentities($this->input->post('nama_barang',TRUE));
+        $jumlah_barang = htmlentities($this->input->post('jumlah_barang',TRUE));
         $gambar = $_FILES['gambar'];
         if ($gambar=''){}else{
             $config['upload_path']  ='assets_style/image';
@@ -93,7 +83,8 @@ class Barang extends CI_Controller {
             }
         }
         
-        $kode_barang = $this->M_Barang->buat_kode_baru($golongan, $bidang); 		
+        $kode_barang = $this->M_Barang->buat_kode_baru($golongan, $bidang); 
+        // var_dump($kode_barang);die;		
 		$dd = $this->db->query("SELECT * FROM tbl_barang WHERE kode_barang = '$kode_barang' ");
 		if($dd->num_rows() > 0)
 		{
@@ -119,7 +110,6 @@ class Barang extends CI_Controller {
                 'nama_barang'=>$nama_barang,
                 'gambar'=>$gambar,
                 'jumlah_barang'=> $jumlah_barang,
-                // 'kode_merk'=>$merk_barang,
             );
 			$this->db->insert('tbl_barang',$data);
 			
@@ -136,23 +126,16 @@ class Barang extends CI_Controller {
 		if($this->session->userdata('level') == 'Petugas'){
 			if($this->uri->segment('3') == ''){ echo '<script>alert("halaman tidak ditemukan");window.location="'.base_url('user').'";</script>';}
 			$this->data['idbo'] = $this->session->userdata('ses_id');
-			$count = $this->M_Barang->CountTableId('tbl_login','id_login',$this->uri->segment('3'));
+			$count = $this->M_Barang->CountTableId('tbl_barang','id_barang',$this->uri->segment('3'));
 			if($count > 0)
 			{			
-				$this->data['barang'] = $this->M_Barang->get_tableid_edit('tbl_login','id_login',$this->uri->segment('3'));
-			}else{
+				$this->data['barang'] = $this->M_Barang->get_tableid_edit('tbl_barang','id_barang',$this->uri->segment('3'));
+                $this->data['golbar'] = $this->M_Golongan->get_golongan();
+                $this->data['bidang'] = $this->M_Bidang->get_bidang();
+            }else{
 				echo '<script>alert("USER TIDAK DITEMUKAN");window.location="'.base_url('barang').'"</script>';
 			}
 			
-		}elseif($this->session->userdata('level') == 'Anggota'){
-			$this->data['idbo'] = $this->session->userdata('ses_id');
-			$count = $this->M_Barang->CountTableId('tbl_login','id_login',$this->uri->segment('3'));
-			if($count > 0)
-			{			
-				$this->data['barang'] = $this->M_Admin->get_tableid_edit('tbl_login','id_login',$this->session->userdata('ses_id'));
-			}else{
-				echo '<script>alert("USER TIDAK DITEMUKAN");window.location="'.base_url('barang').'"</script>';
-			}
 		}
         $this->data['title_web'] = 'Edit Barang ';
         $this->load->view('header_view',$this->data);
@@ -160,30 +143,56 @@ class Barang extends CI_Controller {
         $this->load->view('barang/edit_barang_view',$this->data);
         $this->load->view('footer_view',$this->data);
 	}
-	
-	public function detail()
-    {	
-		if($this->session->userdata('level') == 'Petugas'){
-			if($this->uri->segment('3') == ''){ echo '<script>alert("halaman tidak ditemukan");window.location="'.base_url('user').'";</script>';}
-			$this->data['idbo'] = $this->session->userdata('ses_id');
-			$count = $this->M_Admin->CountTableId('tbl_login','id_login',$this->uri->segment('3'));
-			if($count > 0)
-			{			
-				$this->data['user'] = $this->M_Admin->get_tableid_edit('tbl_login','id_login',$this->uri->segment('3'));
-			}else{
-				echo '<script>alert("USER TIDAK DITEMUKAN");window.location="'.base_url('user').'"</script>';
-			}		
-		}elseif($this->session->userdata('level') == 'Anggota'){
-			$this->data['idbo'] = $this->session->userdata('ses_id');
-			$count = $this->M_Admin->CountTableId('tbl_login','id_login',$this->session->userdata('ses_id'));
-			if($count > 0)
-			{			
-				$this->data['user'] = $this->M_Admin->get_tableid_edit('tbl_login','id_login',$this->session->userdata('ses_id'));
-			}else{
-				echo '<script>alert("USER TIDAK DITEMUKAN");window.location="'.base_url('user').'"</script>';
-			}
-		}
-        $this->data['title_web'] = 'Print Kartu Anggota ';
-        $this->load->view('user/detail',$this->data);
+
+    public function edit_aksi()
+    {
+
+        $post = $this->input->post();
+        $kode_golongan = htmlentities($post['golongan']);
+        $kode_bidang =  htmlentities($post['bidang']);
+        $numer = str_pad(htmlentities($post['edit']), 4, "0", STR_PAD_LEFT);
+        $kode_barang =$kode_golongan .$kode_bidang . $numer;
+        $data = array(
+            'kode_barang'=> $kode_barang, 
+            'nama_barang' => htmlentities($post['nama_barang'])
+        );
+
+			$this->db->where('id_barang',htmlentities($post['edit']));
+			$this->db->update('tbl_barang', $data);
+
+			$this->session->set_flashdata('pesan','<div id="notifikasi"><div class="alert alert-success">
+					<p> Edit Barang Sukses !</p>
+				</div></div>');
+			redirect(base_url('barang')); 
+		
     }
+	
+	public function detail($id_barang)
+    {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
+        $this->data['detail'] = $this->M_Barang->detail_barang($id_barang);
+        // $this->data['detail'] = $this->M_Barang->get_tableid_edit('tbl_barang','id_barang',$this->uri->segment('3'));
+        $this->data['title_web'] = 'Detail Barang';
+        $this->load->view('header_view',$this->data);
+        $this->load->view('sidebar_view',$this->data);
+        $this->load->view('barang/Barang_detail', $this->data);
+        $this->load->view('footer_view',$this->data);
+
+    }
+//     {	
+// 		if($this->session->userdata('level') == 'Petugas'){
+// 			if($this->uri->segment('3') == ''){ echo '<script>alert("halaman tidak ditemukan");window.location="'.base_url('user').'";</script>';}
+// 			$this->data['idbo'] = $this->session->userdata('ses_id');
+// 			$count = $this->M_Barang->CountTableId('tbl_barang','id_barang',$this->uri->segment('3'));
+// 			if($count > 0)
+// 			{			
+// 				$this->data['barang'] = $this->M_Barang->detail_barang('tbl_barang','id_barang',$this->uri->segment('3'));
+// 			}else{
+// 				echo '<script>alert("USER TIDAK DITEMUKAN");window.location="'.base_url('user').'"</script>';
+// 			}		
+		
+//         $this->data['title_web'] = 'Detail Barang';
+//         $this->load->view('Barang/Barang_detail',$this->data);
+//     }
+// }
 }

@@ -17,12 +17,11 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <?php echo form_open_multipart('barang/tambah');?>
-                        <!-- <form action="<?php echo base_url('barang/add');?>" method="POST" enctype="multipart/form-data"> -->
+                        <?php echo form_open_multipart('barang/add');?>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Golongan Barang </label>
+                                    <label for="golongan">Golongan Barang </label>
                                     <select name="golongan" id="golongan" class="form-control">
                                         <option value="">Pilih golongan</option>
                                         <?php
@@ -31,11 +30,10 @@
                                                 echo '<option value="'.$row['kode_golongan'].'">'.$row['nama_golongan'].'</option>';
                                             }
                                             ?>
-                                            
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Bidang Barang </label>
+                                    <label for="bidang">Bidang Barang </label>
                                     <select name="bidang" id="bidang" class="form-control">
                                         <option value="">Pilih Bidang</option>
                                         <?php
@@ -51,48 +49,12 @@
                                     <input type="text" class="form-control" name="nama_barang" required="required"
                                         placeholder="Contoh : Laptop">
                                 </div>
-
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Jumlah Barang</label>
                                     <input type="number" class="form-control" name="jumlah_barang" required="required">
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label>Merk Barang</label>
-                                    <select name="merk_barang" class="form-control" required="required">
-                                        <option value="">--Pilih Merk Barang--</option>
-                                        <?php foreach ($merk as $merk) : ?>
-                                        <option value="<?= $merk['kode_merk'] ?>"
-                                            <?=set_select('merk_barang',$merk['kode_merk'])?>>
-                                            <?=$merk['merk']?>
-                                        </option>
-                                        <?php endforeach;?>
-                                    </select>
-                                </div> -->
-                                <!--   -->
-                                <!-- <div class="form-group">
-                                        <div class="form-group">
-                                            <label>Jenis Barang</label>
-                                            <select name="jenis_barang" class="form-control">
-                                                <option value="">--Pilih Jenis Barang--</option>
-                                                <?php foreach ($jenis_barangs as $jenis_barang) : ?>
-                                                <option value="<?= $jenis_barang['kode_jenis_barang'] ?>"
-                                                    <?=set_select('jenis_barang',$jenis_barang['kode_jenis_barang'])?>>
-                                                    <?=$jenis_barang['nama_jenis_barang']?>
-                                                </option>
-                                                <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                    </div> -->
-                                <!-- <div class="form-group">
-                                    <label>Kondisi Barang</label>
-                                    <select name="kondisi_barang" class="form-control" required="required">
-                                        <option value="1">Baru</option>
-                                        <option value="2">Rusak</option>
-                                        <option value="3">Second</option>
-                                    </select>
-                                </div> -->
                                 <div class="form-group">
                                     <label>Gambar Barang</label>
                                     <input type="file" name="gambar" class="form-control">
@@ -101,9 +63,6 @@
                         </div>
                         <div class="pull-right">
                             <button type="submit" class="btn btn-primary btn-md">Submit</button>
-                            </form>
-                            <!-- <a href="<?= base_url('barang');?>" class="btn btn-danger btn-md">Kembali</a> -->
-                            <?php echo form_close('barang');?>
                         </div>
                     </div>
                 </div>
@@ -111,3 +70,28 @@
         </div>
     </section>
 </div>
+<script>
+$(document).ready(function() {
+    $('#golongan').change(function() {
+        var id_golongan = $('#golongan').val();
+        console.log('id_golongan');
+
+        if (id_bidang != '') {
+            $.ajax({
+                url: "<?php echo base_url(); ?>Golongan/fetch_golongan",
+                method: "POST",
+                data: {
+                    id_golongan: id_golongan
+                },
+                success: function(data) {
+                    $('#golongan').html(data);
+                    $('#bidang').html('<option value="">Select Bidang</option>');
+                }
+            });
+        } else {
+            $('#golongan').html('<option value="">Select Golongan</option>');
+            $('#bidang').html('<option value="">Select Bidang</option>');
+        }
+    });
+});
+</script>

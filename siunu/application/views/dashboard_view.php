@@ -52,7 +52,7 @@
                                 <p>Data Golongan Barang</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-cube"></i>
+                                <i class="fa fa-list"></i>
                             </div>
                             <a href="golongan" class="small-box-footer">More info <i
                                     class="fa fa-arrow-circle-right"></i></a>
@@ -65,7 +65,7 @@
                                 <p>Data Bidang Barang</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-cube"></i>
+                                <i class="fa fa-tasks"></i>
                             </div>
                             <a href="bidang" class="small-box-footer">More info <i
                                     class="fa fa-arrow-circle-right"></i></a>
@@ -78,9 +78,9 @@
                                 <p>Data Inventaris Barang</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-cube"></i>
+                                <i class="fa fa-database"></i>
                             </div>
-                            <a href="bidang" class="small-box-footer">More info <i class="fa fa-databases"></i></a>
+                            <a href="inventaris" class="small-box-footer">More info <i class="fa fa-databases"></i></a>
                         </div>
                     </div>
                 </div>

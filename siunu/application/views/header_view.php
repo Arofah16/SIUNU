@@ -8,7 +8,6 @@
     <title><?php echo $title_web;?> | Sistem Informasi Inventaris UNU Yogyakarta </title>
     <!-- Tell the browser to be responsive to screen width -->
 
-
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet"

@@ -43,16 +43,13 @@ class User extends CI_Controller {
 
     public function add()
     {
-		// format tabel / kode baru 3 hurup / id tabel / order by limit ngambil data terakhir
-		// $id = $this->M_Admin->buat_kode('tbl_login','AG','id_login','ORDER BY id_login DESC LIMIT 1'); 
-        
+		
 		$nama = htmlentities($this->input->post('nama',TRUE));
         $jenis_kelamin = htmlentities($this->input->post('jenis_kelamin',TRUE));
         $user = htmlentities($this->input->post('user',TRUE));
         $pass = md5(htmlentities($this->input->post('pass',TRUE)));
         $telepon = htmlentities($this->input->post('telepon',TRUE));
 		$email = htmlentities($this->input->post('email', TRUE));
-		// $email = $_POST['email'];
         $level = htmlentities($this->input->post('level',TRUE));
         $alamat = htmlentities($this->input->post('alamat',TRUE));
 
@@ -78,14 +75,12 @@ class User extends CI_Controller {
             // $result = array('gambar'=>$result1);
             $data1 = array('upload_data' => $this->upload->data());
             $data = array(
-				// 'anggota_id' => $id,
                 'nama'=>$nama,
                 'jenis_kelamin'=>$jenis_kelamin,
                 'user'=>$user,
                 'pass'=>$pass,
                 'telepon'=>$telepon,
 				'email' => $email,
-                // 'email'=>$_POST['email'],
                 'level'=>$level,
                 'foto'=>$data1['upload_data']['file_name'],
                 'alamat'=>$alamat,

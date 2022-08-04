@@ -17,6 +17,12 @@ class M_Barang extends CI_Model
   //   ON tbl_barang.kode_barang = tbl_bidang_barang.kode_barang
   //  }
 
+  public function hapus_barang($where,$table)
+  {
+    $this->db->where($where);
+    $this->db->delete($table);
+  }
+
    function get_table()
           {
             $this->db->select('*');
@@ -33,6 +39,7 @@ class M_Barang extends CI_Model
 
    function get_tableid_edit($table_name,$where,$id)
    {
+    $this->db->select('id_barang, nama_barang, RIGHT(kode_barang,1) as kode_golongan, SUBSTRING(kode_barang,2,2) as kode_bidang', FALSE);
      $this->db->where($where,$id);
      $edit = $this->db->get($table_name);
      return $edit->row();
@@ -118,20 +125,23 @@ class M_Barang extends CI_Model
        return $row;
    }
 
+   function subquerry ()
+   {
+    $this->db->query("SELECT tbl_barang.nama_barang, tbl_barang_inventaris.id_barang 
+    FROM tbl_barang
+    LEFT JOIN tbl_barang_inventaris
+    ON tbl_barang.id_barang = tbl_barang_inventaris.id_barang
+    ORDER BY tbl_barang.nama_barang;
+    ");
+   }
+
   function get_user($user)
   {
     $this->db->where('id_login',$user);
     $get_user = $this->db->get('tbl_login');
     return $get_user->row();
 	}
-	
-	function rp($angka){
-			$hasil_rupiah = "Rp" . number_format($angka,0,',','.'). ',-';
-			return $hasil_rupiah;
-	}
   
-
-
 //  membuat kode dalam tabel
 
 	public function buat_kode($table_name,$idkode,$orderbylimit)
@@ -155,16 +165,16 @@ class M_Barang extends CI_Model
 
   public function buat_kode_baru($kode_golongan, $kode_bidang)
   {
-    $this->db->select('RIGHT(tbl_barang.kode_barang,3) as kode_barang', FALSE);
-    $this->db->order_by('kode_barang', 'DESC');
+    $this->db->select('*', FALSE);
+    $this->db->order_by('id_barang', 'DESC');
     $this->db->limit(1);
     $query = $this->db->get('tbl_barang');
     
     $kode = 1;
     if($query->num_rows() <> 0){
-      $kode = intval($query->row()->kode_barang) + 1;
+      $kode = intval($query->row()->id_barang) + 1;
     }
-    $batas = str_pad($kode, 6, "0", STR_PAD_LEFT);
+    $batas = str_pad($kode, 4, "0", STR_PAD_LEFT);
 
     return $kode_golongan. $kode_bidang. $batas;
   }
@@ -189,7 +199,7 @@ class M_Barang extends CI_Model
 		  return $kdj;
   }
   
-  function acak($panjang)
+  public function acak($panjang)
   {
       $karakter= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
       $string = '';
@@ -199,10 +209,14 @@ class M_Barang extends CI_Model
       }
       return $string;
   }
-
-  public function buat_kode_inventaris(){
-  
-
+  public function detail_barang($id_barang = NULL)
+  {
+    $this->db->select('id_barang, nama_barang, (SELECT nama_golongan FROM tbl_golongan WHERE kode_golongan=RIGHT(kode_barang,1) LIMIT 1) AS nama_golongan, (SELECT nama_bidang FROM tbl_bidang_barang WHERE kode_bidang=SUBSTRING(kode_barang,2,2) LIMIT 1) as nama_bidang', FALSE);
+    
+   $query= $this->db->get_where('tbl_barang', array('id_barang'=> $id_barang))->row();
+   return $query;
   } 
 }
+
+
 ?>

@@ -19,8 +19,6 @@
                                 Barang
                             </button></a>
                     </div>
-
-
                     <!-- box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
@@ -31,47 +29,37 @@
                                         <th>NO</th>
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
-                                        <th>Jumlah Barang</th>
-                                        <th>Gambar</th>
+                                        <!-- <th>Jumlah Barang</th>
+                                        <th>Gambar</th> -->
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $no=1;foreach($barang as $isi):?>
-                                    <!-- <?php
-                                            if ($isi['kondisi_barang'] == 1) {
-                                                $kondisi_barang = "Baru";
-                                            } else if ($isi['kondisi_barang'] == 2) {
-                                                $kondisi_barang = "Rusak";
-                                            } else {
-                                                $kondisi_barang = "Second";
-                                            }
-                                        ?> -->
                                     <tr>
                                         <td><?= $no++; ?></td>
                                         <td><?= $isi['kode_barang'];?></td>
                                         <td><?= $isi['nama_barang'];?></td>
-                                        <td><?= $isi['jumlah_barang'];?></td>
+                                        <!-- <td><?= $isi['jumlah_barang'];?></td>
                                         <td>
                                             <center>
                                                 <img src="<?php echo base_url();?>assets_style/image/<?php echo $isi['gambar'];?>"
                                                     alt="#" class="img-responsive" style="height:auto;width:100px;" />
                                             </center>
-                                        </td>
-                                        <!-- <td><?= $isi['waktu_perolehan'];?></td> -->
+                                        </td> -->
                                         <td <?php if($this->session->userdata('level') == 'Petugas'){?>style="width:17%;"
                                             <?php }?>>
                                             <?php if($this->session->userdata('level') == 'Petugas'){?>
-                                            <a href="<?= base_url('barang/edit/'.$isi['kode_barang']);?>"><button
+                                            <a href="<?= base_url('barang/edit/'.$isi['id_barang']);?>"><button
                                                     class="btn btn-success"><i class="fa fa-edit"></i></button></a>
-                                            <a href="<?= base_url('barang/detail'.$isi['kode_barang']);?>">
+                                            <a href="<?= base_url('barang/detail/'.$isi['id_barang']);?>">
                                                 <button class="btn btn-primary"><i class="fa fa-sign-in"></i>
                                                     Detail</button></a>
-                                            <a href="<?= base_url('data/prosesbuku?buku_id='.$isi['nama_barang']);?>"
-                                                onclick="return confirm('Anda yakin Buku ini akan dihapus ?');">
+                                            <a href="<?= base_url('barang/delete/'.$isi['id_barang']);?>"
+                                                onclick="return confirm('Anda yakin Barang ini akan dihapus ?');">
                                                 <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
                                             <?php }else{?>
-                                            <a href="<?= base_url('data/bukudetail/'.$isi['nama_barang']);?>">
+                                            <a href="<?= base_url('barang/'.$isi['id_barang']);?>">
                                                 <button class="btn btn-primary"><i class="fa fa-sign-in"></i>
                                                     Detail</button></a>
                                             <?php }?>

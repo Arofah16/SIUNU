@@ -14,11 +14,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <a href="ruang/tambah"><button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah
-                                Inventaris Barang
-                            </button></a>
-                    </div>
 
                     <!-- box-header -->
                     <div class="box-body">
@@ -29,21 +24,23 @@
                                     <tr>
                                         <th>ID Ruang</th>
                                         <th>Nama Ruang</th>
-                                        <th>ID Lantai</th>
+                                        <th>Deskripsi</th>
+                                        <!-- <th>ID Lantai</th>
                                         <th>ID Gedung</th>
-                                        <th>ID Kampus</th>
-                                        <th>Aksi</th>
+                                        <th>ID Kampus</th> -->
+                                        <!-- <th>Aksi</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $no=1;foreach($ruang as $isi):?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><?= $isi['nama_ruang'];?></td>
-                                        <td><?= $isi['id_lantai'];?></td>
+                                        <td><?= $isi['kode_ruang'];?></td>
+                                        <td><?= $isi['deskripsi']?></td>
+                                        <!-- <td><?= $isi['id_lantai'];?></td>
                                         <td><?= $isi['id_gedung'];?></td>
-                                        <td><?= $isi['id_kampus'];?></td>
-                                        <td <?php if($this->session->userdata('level') == 'Petugas'){?>style="width:17%;"
+                                        <td><?= $isi['id_kampus'];?></td> -->
+                                        <!-- <td <?php if($this->session->userdata('level') == 'Petugas'){?>style="width:17%;"
                                             <?php }?>>
 
                                             <?php if($this->session->userdata('level') == 'Petugas'){?>
@@ -60,7 +57,7 @@
                                                 <button class="btn btn-primary"><i class="fa fa-sign-in"></i>
                                                     Detail</button></a>
                                             <?php }?>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                     <?php endforeach;?>
                                 </tbody>

@@ -7,13 +7,11 @@ class M_Bidang extends CI_Model
         parent::__construct();
     }
     function get_bidang(){
-        //  $data= $this->db->querry("SELECT kode_golongan FROM tbl_golongan ORDER BY kode_golongan DESC");
-        //  return $data->result_array();
-        // $data= $this->db->get('tbl_bidang_barang');
-        //  return $data->result_array();
+        
+
          $this->db->select ('*');
          $this->db->from('tbl_bidang_barang');
-         $this->db->order_by('kode_bidang','asc');
+         $this->db->order_by('kode_bidang','ASC');
          $data = $this->db->get();
          return $data->result_array();
     }
@@ -29,6 +27,11 @@ class M_Bidang extends CI_Model
         }
         return $output;
     } 
-    
+    function fetch_bidang()
+    {
+        $this->db->order_by("nama_bidang", "ASC");
+        $query = $this->db->get("tbl_bidang_barang");
+        return $query->result();
+    }
 }
  

@@ -20,7 +20,6 @@ class Bidang extends CI_Controller {
     public function index()
     {	
         $this->data['idbo'] = $this->session->userdata('ses_id');
-        $this->data['user'] = $this->M_Bidang->get_bidang_by_kode_golongan('tbl_login');
         $this->data['bidang_barang'] = $this->db->query("SELECT * FROM tbl_bidang_barang ORDER BY kode_bidang ASC");
         
         $this->data['title_web'] = 'Data Bidang Barang ';
@@ -28,6 +27,14 @@ class Bidang extends CI_Controller {
         $this->load->view('sidebar_view',$this->data);
         $this->load->view('bidang/bidang_view',$this->data); 
         $this->load->view('footer_view',$this->data); 
+    }
+    
+    function fetch_bidang()
+    {
+         if($this->input->post('id'))
+         {
+            echo $this->M_Bidang->fetch_bidang($this->input->post('id'));
+         }
     }
 }
 ?>

@@ -55,7 +55,7 @@
 </head>
 
 <body class="hold-transition login-page" style="overflow-y: hidden;background:url(
-	'<?php echo base_url('assets_style/image/kampus unu.jpg');?>')no-repeat;background-size:100%;">
+	'<?php echo base_url('assets_style/image/profile unu jogja.png');?>')no-repeat;background-size:100%;">
     <div class="login-box">
         <br />
         <div class="login-logo">

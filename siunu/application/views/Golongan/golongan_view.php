@@ -30,19 +30,17 @@
                                     <table id="example1" class="table table-bordered table-striped table" width="100%">
                                         <thead>
                                             <tr>
-                                                <!-- <th>No</th> -->
                                                 <th>Kode Golongan</th>
                                                 <th>Nama Golongan</th>
-                                                <th>Aksi</th>
+                                                <!-- <th>Aksi</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $no=1;foreach($golongan_barang->result_array() as $isi){?>
                                             <tr>
-                                                <!-- <td><?= $no;?></td> -->
                                                 <td><?= $isi['kode_golongan']?></td>
                                                 <td><?= $isi['nama_golongan'];?></td>
-                                                <td style="width:20%;">
+                                                <!-- <td style="width:20%;">
                                                     <a
                                                         href="<?= base_url('golongan/index?id='.$isi['kode_golongan']);?>"><button
                                                             class="btn btn-success"><i
@@ -55,7 +53,7 @@
                                                         href="<?= base_url('golongan/index?id='.$isi['kode_golongan']);?>"><button
                                                             class="btn btn-success"><i
                                                                 class="fa fa-plus"></i></button></a>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                             <?php $no++;}?>
                                         </tbody>

@@ -35,7 +35,6 @@ class Data extends CI_Controller {
 			$this->data['barang'] = $this->M_Admin->get_tableid_edit('tbl_buku','id_barang',$this->uri->segment('3'));
 			$this->data['kats'] =  $this->db->query("SELECT * FROM tbl_kategori ORDER BY id_kategori DESC")->result_array();
 			$this->data['rakbuku'] =  $this->db->query("SELECT * FROM tbl_rak ORDER BY id_ruang DESC")->result_array();
-
 		}else{
 			echo '<script>alert("BUKU TIDAK DITEMUKAN");window.location="'.base_url('data').'"</script>';
 		}
@@ -73,7 +72,6 @@ class Data extends CI_Controller {
 	public function bukutambah()
 	{
 		$this->data['idbo'] = $this->session->userdata('ses_id');
-
 		$this->data['kats'] =  $this->db->query("SELECT * FROM tbl_kategori ORDER BY id_kategori DESC")->result_array();
 		$this->data['rakbuku'] =  $this->db->query("SELECT * FROM tbl_rak ORDER BY id_ruang DESC")->result_array();
 

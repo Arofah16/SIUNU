@@ -17,52 +17,72 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <?php echo form_open_multipart('inventaris/edit_data');?>
-                        <!-- <form action="<?php echo base_url('barang/add');?>" method="POST" enctype="multipart/form-data"> -->
+                        <?php echo form_open_multipart('inventaris/edit');?>
                         <div class="row">
                             <div class="col-sm-6">
+                                <!-- memunculkan value di select box -->
+
                                 <div class="form-group">
-                                    <label>Nama Barang</label>
-                                    <select name="id_barang" class="form-control" required="required">
-                                        <option value="">--Pilih Barang--</option>
-                                        <?php foreach ($barang as $isi) : ?>
-                                        <option value="<?= $isi['id_barang'] ?>"
-                                            <?=set_select('id_barang',$isi['id_barang'])?>>
-                                            <?=$isi['nama_barang']?>
-                                        </option>
+                                    <label for="barang">Nama Barang</label>
+                                    <select class="form-control" name="id_barang">
+                                        <?php foreach($barang as $isi):?>
+                                        <option value="<?= $isi['id_barang']?>"
+                                            <?= $isi['id_barang'] == $inventaris['id_barang'] ? 'selected' : ''?>>
+                                            <?= $isi['nama_barang'];?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                </div>
+                                <div class="form-group">
+                                    <label>Lokasi Barang</label>
+                                    <select name="kampus" id="kampus" class="form-control">
+                                        <?php foreach($kampus as $row):?>
+                                        <option value="<?= $row['id_kampus']?>"
+                                            <?= $row['id_kampus'] ==$inventaris['kode_lokasi'][0] ? 'selected': ''?>>
+                                            <?= $row['nama_kampus']?></option>
                                         <?php endforeach;?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Lokasi Barang</label>
-                                    <select name="id_kampus" id="kampus" class="form-control">
-                                        <option value="">Pilih Kampus</option>
-                                        <?php
-                                            foreach($kampus as $row)
-                                            {
-                                            echo '<option value="'.$row->id_kampus.'">'.$row->nama_kampus.'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
+                                    <label> Nama Gedung</label>
                                     <select name="gedung" id="gedung" class="form-control">
-                                        <option value="">Pilih Gedung</option>
+                                        <?php foreach($gedung as $row):?>
+                                        <option value="<?= $row['id_gedung']?>"
+                                            <?= $row['id_gedung'] == $inventaris['kode_lokasi'][1].$inventaris['kode_lokasi'][2] ? 'selected': ''?>>
+                                            <?= $row['nama_gedung']?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label> Nama Lantai</label>
                                     <select name="lantai" id="lantai" class="form-control">
-                                        <option value="">Pilih Lantai</option>
+                                        <?php foreach($lantai as $row):?>
+                                        <option value="<?= $row['id_lantai']?>"
+                                            <?= $row['id_lantai'] == $inventaris['kode_lokasi'][3] ? 'selected': ''?>>
+                                            <?= $row['nama_lantai']?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select name="ruang" id="ruang" class="form-control ">
-                                        <option value="">Pilih Ruang</option>
+                                    <label> Nama Ruang</label>
+                                    <select name="ruang" id="ruang" class="form-control">
+                                        <?php foreach($ruang as $row):?>
+                                        <option value="<?= $row['id_ruang']?>"
+                                            <?= $row['id_ruang'] == $inventaris['kode_lokasi'][4].$inventaris['kode_lokasi'][5] ? 'selected': ''?>>
+                                            <?= $row['deskripsi']?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select name="sub_ruang" id="sub_ruang" class="form-control ">
-                                        <option value="">Pilih Sub-Ruang</option>
+                                    <label> Nama Sub Ruang</label>
+                                    <select name="sub_ruang" id="sub_ruang" class="form-control">
+                                        <?php foreach($sub_ruang as $row):?>
+                                        <option value="<?= $row['id_sub_ruang']?>">
+                                            <?= $row['id_sub_ruang'] == $inventaris['kode_lokasi'][6] ? 'selected': ''?>
+                                            <?= $row['nama_sub_ruang']?></option>
+                                        <?php endforeach;?>
                                     </select>
                                 </div>
                             </div>
@@ -70,20 +90,28 @@
                                 <div class="form-group">
                                     <label>Status Barang</label>
                                     <select name="status_barang" class="form-control" required="required">
-                                        <option value="hibah">Hibah</option>
-                                        <option value="inventaris">Milik Sendiri</option>
+                                        <option value="hibah" <?=$status_barang=="hibah" ? "selected": "" ?>>Hibah
+                                        </option>
+                                        <option value="inventaris" <?=$status_barang=="inventaris" ? "selected": "" ?>>
+                                            Milik Sendiri</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Tanggal Barang</label>
-                                    <input type="date" class="form-control" name="tanggal_barang" required="required">
+                                    <input type="date" class="form-control" name="tanggal_barang"
+                                        value="<?=$tanggal_barang?>" required="required">
                                 </div>
+
                                 <div class="form-group">
                                     <label>Kondisi Barang</label>
                                     <select name="kondisi_barang" class="form-control" required="required">
-                                        <option value="baru">Baru</option>
-                                        <option value="rusak">Rusak</option>
-                                        <option value="perbaikan">Sedang Diperbaiki</option>
+                                        <option value="baru" <?=$kondisi_barang=="baru" ? "selected": "" ?>>
+                                            Baru</option>
+                                        <option value="rusak" <?=$kondisi_barang=="rusak" ? "selected": "" ?>>Rusak
+                                        </option>
+                                        <option value="perbaikan" <?=$kondisi_barang=="perbaikan" ? "selected": "" ?>>
+                                            Sedang
+                                            Diperbaiki</option>
                                     </select>
                                 </div>
                             </div>
@@ -91,7 +119,6 @@
                         <div class="pull-right">
                             <button type="submit" class="btn btn-primary btn-mr-6">Submit</button>
                             </form>
-                            <!-- <a href="<?= base_url('barang');?>" class="btn btn-danger btn-md">Kembali</a> -->
                             <!-- <?php echo form_close('inventaris');?> -->
                         </div>
                     </div>

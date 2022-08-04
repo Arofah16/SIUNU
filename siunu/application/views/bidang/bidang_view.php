@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                         <div class="box box-primary">
                             <div class="box-header with-border">
                             </div>
@@ -32,9 +32,10 @@
                                                 <th>No</th>
                                                 <th>Kode Bidang</th>
                                                 <th>Nama Bidang</th>
-                                                <th>Aksi</th>
+                                                <!-- <th>Aksi</th> -->
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             <?php $no=1;foreach($bidang_barang->result_array() as $isi_bidang){?>
                                             <tr>
@@ -42,7 +43,7 @@
                                                 <td><?= $isi_bidang['kode_golongan']. "-" . $isi_bidang['kode_bidang']?>
                                                 </td>
                                                 <td><?= $isi_bidang['nama_bidang'];?></td>
-                                                <td style="width:20%;">
+                                                <!-- <td style="width:20%;">
                                                     <a
                                                         href="<?= base_url('Bidang/index?id='.$isi_bidang['kode_bidang']);?>"><button
                                                             class="btn btn-success"><i
@@ -55,7 +56,7 @@
                                                         href="<?= base_url('Bidang/index?id='.$isi_bidang['kode_bidang']);?>"><button
                                                             class="btn btn-success"><i
                                                                 class="fa fa-plus"></i></button></a>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                             <?php $no++;}?>
                                         </tbody>
